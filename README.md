@@ -4,8 +4,8 @@ This file will install Docker and Docker-compose. It will also add the vagrant u
 add autocompletion for docker and docker-compose to bash. Configuration files will be created in a
 temporary directory, used by docker-compose and the resulting containers.
 
-Then it will start two container: a Nginx container and an Elastic Search container. The Nginx
-container is a proxy container to the Elastic Search container. It is only reachable over port 443.
+Then it will start two containers: a Nginx container and an Elastic Search container. The Nginx
+container is a proxy container to the Elastic Search container. It is only reachable over https on port 443.
 
 ##Installation
 
