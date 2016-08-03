@@ -301,7 +301,7 @@ EOF
 ##
 
 echo -e "\e[1;40;33mBuild containers (~ creating cache)\e[0m"
-docker-compose --project elasticsearch --file "${CWD}/${CACHE_DIR}/docker-compose.yml" up -d --force-recreate
+sudo docker-compose --project elasticsearch --file "${CWD}/${CACHE_DIR}/docker-compose.yml" up -d --force-recreate
 
 ##
 # Enable/Start Elastic Search service
@@ -348,18 +348,18 @@ check_connection () {
 
 echo -e "\e[1;40;33mCheck containers\e[0m"
 
-ELASTICSEARCH_ID=$(docker-compose --project elasticsearch --file "${CWD}/${CACHE_DIR}/docker-compose.yml" ps -q elasticsearch)
-ELASTICSEARCH_IP=$(docker inspect --format="{{ .NetworkSettings.Networks.elasticsearch_back.IPAddress }}" ${ELASTICSEARCH_ID})
-if test "true" != "$(docker inspect --format="{{ .State.Running }}" ${ELASTICSEARCH_ID})"; then
+ELASTICSEARCH_ID=$(sudo docker-compose --project elasticsearch --file "${CWD}/${CACHE_DIR}/docker-compose.yml" ps -q elasticsearch)
+ELASTICSEARCH_IP=$(sudo docker inspect --format="{{ .NetworkSettings.Networks.elasticsearch_back.IPAddress }}" ${ELASTICSEARCH_ID})
+if test "true" != "$(sudo docker inspect --format="{{ .State.Running }}" ${ELASTICSEARCH_ID})"; then
     echo -e "\e[1;40;31mElastic Search container failed to run!\e[0m"
     exit 1
 else
     check_connection "Elastic Search" ${ELASTICSEARCH_IP} 9200
 fi
 
-NGINX_ID=$(docker-compose --project elasticsearch --file "${CWD}/${CACHE_DIR}/docker-compose.yml" ps -q nginx)
-NGINX_IP=$(docker inspect --format="{{ .NetworkSettings.Networks.elasticsearch_proxy.IPAddress }}" ${NGINX_ID})
-if test "true" != "$(docker inspect --format="{{ .State.Running }}" ${NGINX_ID})"; then
+NGINX_ID=$(sudo docker-compose --project elasticsearch --file "${CWD}/${CACHE_DIR}/docker-compose.yml" ps -q nginx)
+NGINX_IP=$(sudo docker inspect --format="{{ .NetworkSettings.Networks.elasticsearch_proxy.IPAddress }}" ${NGINX_ID})
+if test "true" != "$(sudo docker inspect --format="{{ .State.Running }}" ${NGINX_ID})"; then
     echo -e "\e[1;40;31mNginx container failed to run!\e[0m"
     exit 1
 else
